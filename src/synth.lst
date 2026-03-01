@@ -1,1 +1,2 @@
 fconv8 N_STAGES=3
+fadd8 N_STAGES=3

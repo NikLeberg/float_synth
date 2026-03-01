@@ -1,2 +1,3 @@
 float8_pkg.vhd
 fconv8.vhd
+fadd8.vhd
