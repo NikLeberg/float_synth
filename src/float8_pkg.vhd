@@ -25,7 +25,7 @@ package float8_pkg is new ieee.float_generic_pkg
     float_fraction_width => 3,
     float_round_style    => ieee.fixed_float_types.round_zero,
     float_denormalize    => true,
-    float_check_error    => true,
+    float_check_error    => false,
     float_guard_bits     => 1,
     no_warning           => true,
     fixed_pkg            => work.fixed8_pkg
