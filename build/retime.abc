@@ -1,0 +1,12 @@
+strash
+scorr
+if -K 4
+
+# All pipeline FF we shall retime are at the end of
+# the design, so skip forward retime and simply retime backwards.
+retime -M 5 -bv
+
+if -K 4
+
+# Ensure current network is equal to initially loaded network.
+dsec -v
