@@ -1,0 +1,29 @@
+{
+    "name": "${localWorkspaceFolderBasename}",
+    "image": "ghcr.io/nikleberg/dev-base",
+    "runArgs": [
+        // set a human friendly container name
+        "--name=${localWorkspaceFolderBasename}_devcontainer",
+        // set a human friendly machine name
+        "--hostname=${localWorkspaceFolderBasename}",
+        // forward docker socket to allow Docker-outside-of-Docker (DooD)
+        "--volume=/var/run/docker.sock:/var/run/docker.sock",
+        // Install a script with aliases for DooD based tools / commands.
+        //  => this only works for non-interactive bash shells
+        "--env=BASH_ENV=/workspaces/${localWorkspaceFolderBasename}/.devcontainer/.env",
+        // forward Xauthority cookie path, if available
+        "--env=XAUTHORITY"
+    ],
+    // Install a script with aliases for DooD based tools / commands.
+    //  => this only works for interactive bash shells
+    "postCreateCommand": "echo \"source $BASH_ENV\" >> /etc/bash.bashrc",
+    "customizations": {
+        "vscode": {
+            // IDs of extensions installed when the container is created.
+            "extensions": [
+                // language server for linting
+                "hbohlin.vhdl-ls"
+            ]
+        }
+    }
+}
