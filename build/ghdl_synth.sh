@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: MIT
 set -e
 
 SYNTH_FILE="../src/synth.lst"
@@ -21,12 +22,12 @@ function postprocess_entity () {
 
 function synth () {
     entity="$1"
-    shift 1
+    generic_args="$2"
 
     new_entity="${entity}_base"
     outfile="$SYNTH_OUT/${new_entity}.vhd"
 
-    cmd=(ghdl --synth --std=08 --no-formal "$@" "$entity")
+    cmd=(ghdl --synth --std=08 --no-formal $generic_args "$entity")
 
     echo "${cmd[*]} > $outfile"
     "${cmd[@]}" > "$outfile"
@@ -40,16 +41,16 @@ while IFS= read -r line || [[ -n "$line" ]]; do
 
     entity="${line%% *}"
 
-    generic_args=()
+    generic_args=""
     if [[ "$line" == *" "* ]]; then
         generics="${line#* }"
         IFS=',' read -ra gen_array <<< "$generics"
         for g in "${gen_array[@]}"; do
             g="$(echo "$g" | xargs)"
-            generic_args+=("-g${g}")
+            generic_args="${generic_args} -g${g}"
         done
     fi
 
-    synth "$entity" "${args[@]}"
+    synth "$entity" "$generic_args"
 
 done < "$SYNTH_FILE"
