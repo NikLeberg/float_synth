@@ -1,0 +1,8 @@
+standard = "2008"
+preferred_case = "lower"
+[libraries]
+defaultlib.files = [
+    "src/*.vhd",
+    "src/tb/*.vhd",
+    "src/gen/base/*.vhd",
+]
