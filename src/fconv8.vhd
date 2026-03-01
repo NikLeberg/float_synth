@@ -1,6 +1,6 @@
 -- =============================================================================
--- File:                    fconv.vhd
--- Entity:                  fconv
+-- File:                    fconv8.vhd
+-- Entity:                  fconv8
 -- Author:                  Niklaus Leuenberger <@NikLeberg>
 -- SPDX-License-Identifier: MIT
 -- Description:             Signed to floating point converter utilizing the
