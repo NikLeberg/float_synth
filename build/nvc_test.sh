@@ -6,12 +6,19 @@ set -e
 SIM_PREFIX=../src/tb
 mapfile SIM_TESTS < $SIM_PREFIX/tests.lst
 
+# Toplevel testbenches.
+TOP_PREFIX=../src/top
+mapfile TOP_TESTS < $TOP_PREFIX/tests.lst
+
 function test () {
-    cmd="nvc --std=08 -e $1 -r"
+    cmd="nvc --std=08 --ieee-warnings=off -e $1 -r"
     echo $cmd
     $cmd
 }
 
 for t in "${SIM_TESTS[@]}"; do
+    test $t
+done
+for t in "${TOP_TESTS[@]}"; do
     test $t
 done
