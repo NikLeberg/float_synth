@@ -71,7 +71,7 @@ begin
 
   dut : entity work.fadd8
     generic map (
-      N_STAGES  => N_STAGES
+      N_STAGES => N_STAGES
     )
     port map (
       clk => clk,

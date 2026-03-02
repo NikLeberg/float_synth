@@ -69,7 +69,7 @@ begin
 
   dut : entity work.fconv8
     generic map (
-      N_STAGES  => N_STAGES
+      N_STAGES => N_STAGES
     )
     port map (
       clk => clk,
