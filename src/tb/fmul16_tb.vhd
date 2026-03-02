@@ -1,0 +1,136 @@
+-- =============================================================================
+-- File:                    fmul16_tb.vhd
+-- Entity:                  fmul16_tb
+-- Author:                  Niklaus Leuenberger <@NikLeberg>
+-- SPDX-License-Identifier: MIT
+-- Description:             Testbench for floating point multiplication with
+--                          generic pipeline depth.
+-- =============================================================================
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+use work.float16_pkg.all;
+use work.float16_type_pkg.all;
+
+entity fmul16_tb is
+  generic (
+    N_STAGES : natural := 1
+  );
+end entity;
+
+architecture sim of fmul16_tb is
+  constant CLK_PERIOD : delay_length := 20 ns; -- 50 MHz
+  signal clk, done : std_logic := '0';
+
+  signal a, b, y : std_logic_vector(15 downto 0) := (others => '0');
+
+  type test_vec_t is record
+    a, b, y : real;
+  end record;
+  type test_vec_arr_t is array (natural range<>) of test_vec_t;
+  constant TEST_VEC : test_vec_arr_t := (
+    (0.0, 0.0, 0.0),
+    (1.0, 0.0, 0.0),
+    (0.0, 1.0, 0.0),
+    (1.0, 1.0, 1.0),
+    (2.0, 3.0, 6.0),
+
+    (5.0, -5.0, -25.0),
+    (-3.0, -2.0, 6.0),
+    (7.0, -2.0, -14.0),
+    (-7.0, 2.0, -14.0),
+
+    (8.0, 8.0, 64.0),
+    (15.0, 1.0, 15.0),
+
+    (16.0, 1.0, 16.0),
+    (32.0, 1.0, 32.0),
+    (64.0, 2.0, 128.0),
+
+    (18.0, 2.0, 36.0),
+    (18.0, 1.0, 18.0),
+    (22.0, 3.0, 66.0),
+
+    (20.0, -18.0, -360.0),
+    (36.0, -32.0, -1152.0),
+
+    (60.0, 4.0, 240.0),
+    (60.0, 1.0, 60.0),
+
+    (-18.0, -2.0, 36.0),
+    (-36.0, -4.0, 144.0),
+
+    (120.0, 8.0, 960.0),
+    (120.0, 1.0, 120.0)
+  );
+begin
+
+  clk <= '0' when done else not clk after CLK_PERIOD / 2;
+
+  dut : entity work.fmul16
+    generic map (
+      N_STAGES => N_STAGES
+    )
+    port map (
+      clk => clk,
+      a   => a,
+      b   => b,
+      y   => y
+    );
+
+  stimuli : process
+  begin
+    wait until rising_edge(clk);
+
+    for i in TEST_VEC'range loop
+      a <= to_slv(to_float(TEST_VEC(i).a));
+      b <= to_slv(to_float(TEST_VEC(i).b));
+      wait until rising_edge(clk);
+    end loop;
+
+    wait;
+  end process;
+
+  test : process
+    variable v : real;
+  begin
+    wait until rising_edge(clk);
+
+    -- initial sync
+    for i in 0 to N_STAGES loop
+      wait until rising_edge(clk);
+    end loop;
+
+    for i in TEST_VEC'range loop
+      v := to_real(to_float(y));
+      assert v = TEST_VEC(i).y
+        report to_string(TEST_VEC(i).a) & " * " & to_string(TEST_VEC(i).b) &
+          " != " & to_string(TEST_VEC(i).y) & ", got: " & to_string(v)
+        severity error;
+      wait until rising_edge(clk);
+    end loop;
+
+    done <= '1';
+    wait;
+  end process;
+end architecture;
+
+entity fmul16_1_tb is end entity;
+architecture sim of fmul16_1_tb is
+begin
+  dut : entity work.fmul16_tb generic map (1);
+end architecture;
+
+entity fmul16_4_tb is end entity;
+architecture sim of fmul16_4_tb is
+begin
+  dut : entity work.fmul16_tb generic map (4);
+end architecture;
+
+entity fmul16_12_tb is end entity;
+architecture sim of fmul16_12_tb is
+begin
+  dut : entity work.fmul16_tb generic map (12);
+end architecture;

@@ -1,6 +1,15 @@
 fconv8_1_tb
 fconv8_4_tb
 fconv8_12_tb
+fconv16_1_tb
+fconv16_4_tb
+fconv16_12_tb
 fadd8_1_tb
 fadd8_4_tb
 fadd8_12_tb
+fadd16_1_tb
+fadd16_4_tb
+fadd16_12_tb
+fmul16_1_tb
+fmul16_4_tb
+fmul16_12_tb

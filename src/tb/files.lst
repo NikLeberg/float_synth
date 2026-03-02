@@ -1,2 +1,5 @@
 fconv8_tb.vhd
+fconv16_tb.vhd
 fadd8_tb.vhd
+fadd16_tb.vhd
+fmul16_tb.vhd

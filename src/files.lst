@@ -1,3 +1,7 @@
 float8_pkg.vhd
+float16_pkg.vhd
 fconv8.vhd
+fconv16.vhd
 fadd8.vhd
+fadd16.vhd
+fmul16.vhd
