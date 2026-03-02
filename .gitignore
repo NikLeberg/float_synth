@@ -1,3 +1,10 @@
 # ignore build artifacts but keep build scripts
 build/*
 !build/*.sh
+!build/*.tcl
+!build/*.abc
+
+# ingore quartus generated files but keep project config
+!build/quartus/
+build/quartus/*/
+build/quartus/*.qws
