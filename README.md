@@ -43,7 +43,7 @@ Below table shows the resource usage and achieved timing of the various mathemat
 | Entity | Function | Base |||| Opt |||| Altera ||||
 |:---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
 ||| LUT4 | FF | Fmax | Latency | LUT4 | FF | Fmax | Latency | LUT4 | FF | Fmax | Latency |
-| fconv16 | `y = float16(a)` | 108 | 48 | - | 3 |  97 |  63 | 235 | 3 | 136 |  96 | 209 | 5 |
+| fconv16 | `y = float16(a)` | 108 |  48 | 114 | 3 |  97 |  63 | 236 | 3 | 136 |  96 | 217 | 5 |
 
 Note:
  - The Altera _megafunction_ `fp_functions` does only support a minimum float size of 16-bit i.e. (1.5.10) in a half precision representation.

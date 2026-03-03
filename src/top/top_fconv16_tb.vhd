@@ -147,11 +147,11 @@ end architecture;
 entity top_fconv16_base_tb is end entity;
 architecture sim of top_fconv16_base_tb is
 begin
-  dut : entity work.top_fconf16_tb generic map (3, "base");
+  dut : entity work.top_fconf16_tb generic map (3+1, "base");
 end architecture;
 
 entity top_fconv16_opt_tb is end entity;
 architecture sim of top_fconv16_opt_tb is
 begin
-  dut : entity work.top_fconf16_tb generic map (3, "opt");
+  dut : entity work.top_fconf16_tb generic map (3+1, "opt");
 end architecture;

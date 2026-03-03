@@ -48,20 +48,31 @@ architecture rtl of top is
     );
   end component;
 
+  signal aff, bff, cff : std_logic_vector(15 downto 0) := (others => '0');
+
 begin
+
+  process (clk) is
+  begin
+    if rising_edge(clk) then
+      aff <= a;
+      bff <= b;
+      cff <= c;
+    end if;
+  end process;
 
   gen_fconv : if OP = "fconv" generate
     gen_variant : if VARIANT = "base" generate
       fconv_inst : entity work.fconv16_base
-        port map (clk => clk, a => a, y => y);
+        port map (clk => clk, a => aff, y => y);
 
     elsif VARIANT = "opt" generate
       fconv_inst : fconv16_opt
-        port map (clk => clk, a => a, y => y);
+        port map (clk => clk, a => aff, y => y);
 
     elsif VARIANT = "altera" generate
       fconv_inst : fconv16_alt
-        port map (clk => clk, areset => '0', a => a, q => y);
+        port map (clk => clk, areset => '0', a => aff, q => y);
 
     end generate;
   end generate;
