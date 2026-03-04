@@ -1,3 +1,2 @@
 fconv16 N_STAGES=3
-fadd16 N_STAGES=3
-fmul16 N_STAGES=3
+fadd16 N_STAGES=8

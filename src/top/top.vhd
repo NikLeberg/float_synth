@@ -37,6 +37,13 @@ architecture rtl of top is
       y   : out std_logic_vector(15 downto 0)  -- float 16-bit (1.5.10)
     );
   end component;
+  component fadd16_opt is
+    port (
+      clk  : in  std_logic;
+      a, b : in  std_logic_vector(15 downto 0); -- float 16-bit (1.5.10)
+      y    : out std_logic_vector(15 downto 0)  -- float 16-bit (1.5.10)
+    );
+  end component;
 
   -- declare altera megawizard entities
   component fconv16_alt is
@@ -44,6 +51,14 @@ architecture rtl of top is
       clk    : in  std_logic;
       areset : in  std_logic;
       a      : in  std_logic_vector(15 downto 0);
+      q      : out std_logic_vector(15 downto 0)
+    );
+  end component;
+  component fadd16_alt is
+    port (
+      clk    : in  std_logic;
+      areset : in  std_logic;
+      a, b   : in  std_logic_vector(15 downto 0);
       q      : out std_logic_vector(15 downto 0)
     );
   end component;
@@ -73,6 +88,22 @@ begin
     elsif VARIANT = "altera" generate
       fconv_inst : fconv16_alt
         port map (clk => clk, areset => '0', a => aff, q => y);
+
+    end generate;
+  end generate;
+
+  gen_fadd : if OP = "fadd" generate
+    gen_variant : if VARIANT = "base" generate
+      fadd_inst : entity work.fadd16_base
+        port map (clk => clk, a => aff, b => bff, y => y);
+
+    elsif VARIANT = "opt" generate
+      fadd_inst : fadd16_opt
+        port map (clk => clk, a => aff, b => bff, y => y);
+
+    elsif VARIANT = "altera" generate
+      fadd_inst : fadd16_alt
+        port map (clk => clk, areset => '0', a => aff, b => bff, q => y);
 
     end generate;
   end generate;

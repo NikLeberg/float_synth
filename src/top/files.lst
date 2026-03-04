@@ -1,2 +1,3 @@
 top.vhd
 top_fconv16_tb.vhd
+top_fadd16_tb.vhd
