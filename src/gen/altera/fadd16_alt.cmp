@@ -1,0 +1,10 @@
+	component fadd16_alt is
+		port (
+			clk    : in  std_logic                     := 'X';             -- clk
+			areset : in  std_logic                     := 'X';             -- reset
+			a      : in  std_logic_vector(15 downto 0) := (others => 'X'); -- a
+			b      : in  std_logic_vector(15 downto 0) := (others => 'X'); -- b
+			q      : out std_logic_vector(15 downto 0)                     -- q
+		);
+	end component fadd16_alt;
+
