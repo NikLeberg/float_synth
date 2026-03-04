@@ -44,6 +44,10 @@ Below table shows the resource usage and achieved timing of the various mathemat
 |:---:|---|---|---|---|---|---|---|---|---|---|---|---|---|
 ||| LUT4 | FF | Fmax | Latency | LUT4 | FF | Fmax | Latency | LUT4 | FF | Fmax | Latency |
 | fconv16 | `y = float16(a)` | 108 |  48 | 114 | 3 |  97 |  63 | 236 | 3 | 136 |  96 | 217 | 5 |
+| fadd16  | `y = a + b`  | ~~147~~ | 128 |  83 | 8 | 457 | 349 | 197 | 8 | 263 | 264 | 219 | 9 |
+
+Todo:
+ - The _base_ variant of _fadd16_ uses suspiciously few LUT4. The testbench is also failing to simulate. Broken?
 
 Note:
  - The Altera _megafunction_ `fp_functions` does only support a minimum float size of 16-bit i.e. (1.5.10) in a half precision representation.
