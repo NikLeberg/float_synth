@@ -1,3 +1,4 @@
 base/fconv16_base.vhd
 base/fadd16_base.vhd
 opt/fconv16_opt.v
+opt/fadd16_opt.v
