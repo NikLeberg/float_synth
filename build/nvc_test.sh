@@ -11,6 +11,10 @@ TOP_PREFIX=../src/top
 mapfile TOP_TESTS < $TOP_PREFIX/tests.lst
 
 function test () {
+    if [[ "$1" == \#* ]]; then
+        echo "Skipped testbench ${1#\#}."
+        return
+    fi
     cmd="nvc --std=08 --ieee-warnings=off -e $1 -r"
     echo $cmd
     $cmd
